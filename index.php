@@ -1,25 +1,37 @@
 <?php
 
-require_once "Book.php";
-require_once "Library.php";
+   error_reporting(E_ALL);
+
+   require_once "Product.php";
+   require_once "Cart.php";
+   require_once "CartItem.php";
+
+$product1 = new Product(1, "JaiPhone 12", 2500, 100);
+$product2 = new Product(2, "M2 SSD", 400, 10);
+$product3 = new Product(3, "Samsung Galaxy S20", 3200, 10);
+
+$cart = new Cart();
+
+$cartitem1 = $cart->addProduct($product1, 1);
+$cartitem2 = $cart->addProduct($product2, 1);
+
+echo "Number of Items int Cart: :".PHP_EOL;
+
+echo $cart->getTotalQuantity().PHP_EOL; // this must print 2
+
+echo "Total Sum : ".PHP_EOL;
+
+echo $cart->getTotalSum(). PHP_EOL;
+
+$cartitem2->increaseQuantity();
+$cartitem2->decreaseQuantity();
 
 
-$library = new Library();
+$cart->removeProduct($product1);
+echo "Number of Items int Cart: :".PHP_EOL;
 
-$a = $library->addAuthor("Robort Kiyosaki");
-$a->addBook("Rich Dad Poor Dad",199.99);
-$a->addBook("Cashflow Quadrant", 199);
+echo $cart->getTotalQuantity().PHP_EOL; // this must print 2
 
-$library->addBooksForAuthor("Jack London", new Book("A Son of the Sun", 125));
+echo "Total Sum : ".PHP_EOL;
 
-$author2= $library->addAuthor("Boilsted");
-$author2->addBook("Electronics Made Easy", 655);
-$author2->addBook("Luck by chance", 120);
-
-$book = $library->search('Luck by chance');
-
-// $author3= $book->getAuthor();
-// echo $author3->getName().PHP_EOL;
-// 
-
-$library->print();
+echo $cart->getTotalSum(). PHP_EOL;
